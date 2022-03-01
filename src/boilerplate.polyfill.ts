@@ -68,7 +68,7 @@ function groupRows<T>(
 }
 
 declare global {
-  export type Uuid = string & { _uuidBrand: undefined };
+  export type Uuid = string;
 
   interface Array<T> {
     toDtos<Dto extends AbstractDto>(this: T[], options?: unknown): Dto[];
