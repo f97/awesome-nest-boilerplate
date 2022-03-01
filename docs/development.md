@@ -37,11 +37,8 @@ yarn install
 Before start install PostgreSQL and fill correct configurations in `.env` file
 
 ```env
-DB_HOST=localhost
-DB_PORT=5432
-DB_USERNAME=postgres
-DB_PASSWORD=postgres
-DB_DATABASE=nest_boilerplate
+DB_TYPE=mongodb
+DB_URL=mongodb://localhost:27017
 ```
 
 Some helper script to work with database

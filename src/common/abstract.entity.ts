@@ -1,7 +1,7 @@
 import {
   Column,
   CreateDateColumn,
-  PrimaryGeneratedColumn,
+  ObjectIdColumn,
   UpdateDateColumn,
 } from 'typeorm';
 
@@ -30,7 +30,7 @@ export abstract class AbstractEntity<
   O = never,
 > implements IAbstractEntity<DTO, O>
 {
-  @PrimaryGeneratedColumn('uuid')
+  @ObjectIdColumn()
   id: Uuid;
 
   @CreateDateColumn({

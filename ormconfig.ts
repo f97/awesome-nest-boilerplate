@@ -7,12 +7,8 @@ import { SnakeNamingStrategy } from './src/snake-naming.strategy';
 
 const configs: TypeOrmModuleOptions & { seeds: string[]; factories: string[] } =
   {
-    type: 'postgres',
-    host: process.env.DB_HOST,
-    port: Number(process.env.DB_PORT),
-    username: process.env.DB_USERNAME,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_DATABASE,
+    type: 'mongodb',
+    url: process.env.DB_URL,
     namingStrategy: new SnakeNamingStrategy(),
     subscribers: [UserSubscriber],
     entities: [

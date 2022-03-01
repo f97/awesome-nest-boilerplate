@@ -51,7 +51,6 @@ skip_if: <%= !blocks.includes('Service') %>
 
 %>import { Injectable } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
-import { Transactional } from 'typeorm-transactional-cls-hooked';
 
 import type { PageDto } from '../../common/dto/page.dto';
 import { ValidatorService } from '../../shared/services/validator.service';
@@ -72,7 +71,6 @@ export class <%= ServiceName %> {
     private commandBus: CommandBus,
   ) {}
 
-  @Transactional()
   <%= createFunctionName %>(<%= createDtoName %>: <%= CreateDtoName %>): Promise<<%= EntityName %>> {
     return this.commandBus.execute<<%= CreateCommandName %>, <%= EntityName %>>(
       new <%= CreateCommandName %>(<%= createDtoName %>),

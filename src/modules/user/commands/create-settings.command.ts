@@ -23,7 +23,7 @@ export class CreateSettingsHandler
     const userSettingsEntity =
       this.userSettingsRepository.create(createSettingsDto);
 
-    userSettingsEntity.userId = userId;
+    userSettingsEntity.userId = userId.toString();
 
     return this.userSettingsRepository.save(userSettingsEntity);
   }

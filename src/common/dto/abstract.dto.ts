@@ -45,8 +45,6 @@ export class AbstractDto {
       }
 
       Object.assign(this, fields);
-    } else {
-      this.translations = entity.translations?.toDtos();
     }
   }
 }

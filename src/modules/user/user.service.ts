@@ -2,15 +2,14 @@ import { Injectable } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import { plainToClass } from 'class-transformer';
 import type { FindConditions } from 'typeorm';
-import { Transactional } from 'typeorm-transactional-cls-hooked';
 
 import type { PageDto } from '../../common/dto/page.dto';
 import { FileNotImageException, UserNotFoundException } from '../../exceptions';
-import { IFile } from '../../interfaces';
+import type { IFile } from '../../interfaces';
 import { AwsS3Service } from '../../shared/services/aws-s3.service';
 import { ValidatorService } from '../../shared/services/validator.service';
 import type { Optional } from '../../types';
-import { UserRegisterDto } from '../auth/dto/UserRegisterDto';
+import type { UserRegisterDto } from '../auth/dto/UserRegisterDto';
 import { CreateSettingsCommand } from './commands/create-settings.command';
 import { CreateSettingsDto } from './dtos/create-settings.dto';
 import type { UserDto } from './dtos/user.dto';
@@ -57,7 +56,6 @@ export class UserService {
     return queryBuilder.getOne();
   }
 
-  @Transactional()
   async createUser(
     userRegisterDto: UserRegisterDto,
     file: IFile,
