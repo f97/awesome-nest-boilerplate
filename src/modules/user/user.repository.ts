@@ -1,6 +1,3 @@
-import { EntityRepository, Repository } from 'typeorm';
+import { UserEntity, userSchema } from './user.entity';
 
-import { UserEntity } from './user.entity';
-
-@EntityRepository(UserEntity)
-export class UserRepository extends Repository<UserEntity> {}
+export const userRepository = { name: UserEntity.name, schema: userSchema };

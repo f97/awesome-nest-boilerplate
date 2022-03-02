@@ -1,9 +1,4 @@
-import {
-  Column,
-  CreateDateColumn,
-  ObjectIdColumn,
-  UpdateDateColumn,
-} from 'typeorm';
+import { Prop } from '@nestjs/mongoose';
 
 import { LanguageCode } from '../constants';
 import type { Constructor } from '../types';
@@ -18,7 +13,7 @@ import type { AbstractDto, AbstractTranslationDto } from './dto/abstract.dto';
  * otherwise just delete and use your own entity.
  */
 export interface IAbstractEntity<DTO extends AbstractDto, O = never> {
-  id: Uuid;
+  id: string;
   createdAt: Date;
   updatedAt: Date;
 
@@ -30,16 +25,16 @@ export abstract class AbstractEntity<
   O = never,
 > implements IAbstractEntity<DTO, O>
 {
-  @ObjectIdColumn()
-  id: Uuid;
+  @Prop()
+  id: string;
 
-  @CreateDateColumn({
-    type: 'timestamp',
+  @Prop({
+    type: Date,
   })
   createdAt: Date;
 
-  @UpdateDateColumn({
-    type: 'timestamp',
+  @Prop({
+    type: Date,
   })
   updatedAt: Date;
 
@@ -64,6 +59,6 @@ export class AbstractTranslationEntity<
   DTO extends AbstractTranslationDto = AbstractTranslationDto,
   O = never,
 > extends AbstractEntity<DTO, O> {
-  @Column({ type: 'enum', enum: LanguageCode })
+  @Prop({ type: 'enum', enum: LanguageCode })
   languageCode: LanguageCode;
 }

@@ -6,7 +6,7 @@ import type { AbstractEntity } from '../abstract.entity';
 
 export class AbstractDto {
   @ApiProperty()
-  id: Uuid;
+  id: string;
 
   @ApiProperty()
   createdAt: Date;

@@ -1,3 +1,4 @@
+import { Prop } from '@nestjs/mongoose';
 import { ApiProperty } from '@nestjs/swagger';
 import {
   IsEmail,
@@ -7,7 +8,6 @@ import {
   IsString,
   MinLength,
 } from 'class-validator';
-import { Column } from 'typeorm';
 
 import { Trim } from '../../../decorators/transform.decorators';
 
@@ -37,7 +37,7 @@ export class UserRegisterDto {
   readonly password: string;
 
   @ApiProperty()
-  @Column()
+  @Prop()
   @IsPhoneNumber()
   @IsOptional()
   phone: string;

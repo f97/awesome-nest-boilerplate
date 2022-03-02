@@ -10,7 +10,6 @@ import { AwsS3Service } from '../../shared/services/aws-s3.service';
 import { ValidatorService } from '../../shared/services/validator.service';
 import type { Optional } from '../../types';
 import type { UserRegisterDto } from '../auth/dto/UserRegisterDto';
-import { CreateSettingsCommand } from './commands/create-settings.command';
 import { CreateSettingsDto } from './dtos/create-settings.dto';
 import type { UserDto } from './dtos/user.dto';
 import type { UsersPageOptionsDto } from './dtos/users-page-options.dto';
@@ -92,7 +91,7 @@ export class UserService {
     return items.toPageDto(pageMetaDto);
   }
 
-  async getUser(userId: Uuid): Promise<UserDto> {
+  async getUser(userId: string): Promise<UserDto> {
     const queryBuilder = this.userRepository.createQueryBuilder('user');
 
     queryBuilder.where('user.id = :userId', { userId });
@@ -107,7 +106,7 @@ export class UserService {
   }
 
   async createSettings(
-    userId: Uuid,
+    userId: string,
     createSettingsDto: CreateSettingsDto,
   ): Promise<UserSettingsEntity> {
     return this.commandBus.execute<CreateSettingsCommand, UserSettingsEntity>(

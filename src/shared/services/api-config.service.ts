@@ -1,10 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import type { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { isNil } from 'lodash';
-
-import { UserSubscriber } from '../../entity-subscribers/user-subscriber';
-import { SnakeNamingStrategy } from '../../snake-naming.strategy';
 
 @Injectable()
 export class ApiConfigService {
@@ -56,53 +52,8 @@ export class ApiConfigService {
     return this.getString('FALLBACK_LANGUAGE');
   }
 
-  get mongodbConfig(): TypeOrmModuleOptions {
-    let entities = [
-      __dirname + '/../../modules/**/*.entity{.ts,.js}',
-      __dirname + '/../../modules/**/*.view-entity{.ts,.js}',
-    ];
-    let migrations = [__dirname + '/../../database/migrations/*{.ts,.js}'];
-
-    if (module.hot) {
-      const entityContext = require.context(
-        './../../modules',
-        true,
-        /\.entity\.ts$/,
-      );
-      entities = entityContext.keys().map((id) => {
-        const entityModule = entityContext<Record<string, unknown>>(id);
-        const [entity] = Object.values(entityModule);
-
-        return entity as string;
-      });
-      const migrationContext = require.context(
-        './../../database/migrations',
-        false,
-        /\.ts$/,
-      );
-
-      migrations = migrationContext.keys().map((id) => {
-        const migrationModule = migrationContext<Record<string, unknown>>(id);
-        const [migration] = Object.values(migrationModule);
-
-        return migration as string;
-      });
-    }
-
-    return {
-      entities,
-      migrations,
-      keepConnectionAlive: !this.isTest,
-      dropSchema: this.isTest,
-      type: 'mongodb',
-      name: 'default',
-      url: this.getString('DB_URL'),
-
-      subscribers: [UserSubscriber],
-      migrationsRun: true,
-      logging: this.getBoolean('ENABLE_ORM_LOGS'),
-      namingStrategy: new SnakeNamingStrategy(),
-    };
+  get mongodbConfig() {
+    return { uri: this.getString('DB_URI') };
   }
 
   get awsS3Config() {

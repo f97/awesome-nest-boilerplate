@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, OneToOne } from 'typeorm';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 
 import type { IAbstractEntity } from '../../common/abstract.entity';
 import { AbstractEntity } from '../../common/abstract.entity';
@@ -16,25 +16,24 @@ export interface IUserSettingsEntity extends IAbstractEntity<UserDto> {
   user?: IUserEntity;
 }
 
-@Entity({ name: 'user_settings' })
+@Schema({ discriminatorKey: 'user_settings' })
 @UseDto(UserDto)
 export class UserSettingsEntity
   extends AbstractEntity<UserDto, UserDtoOptions>
   implements IUserSettingsEntity
 {
-  @Column({ default: false })
+  @Prop({ default: false })
   isEmailVerified?: boolean;
 
-  @Column({ default: false })
+  @Prop({ default: false })
   isPhoneVerified?: boolean;
 
-  @Column({ type: 'uuid' })
+  @Prop({ type: 'uuid' })
   userId?: string;
 
-  @OneToOne(() => UserEntity, (user) => user.settings, {
-    onDelete: 'CASCADE',
-    onUpdate: 'CASCADE',
-  })
-  @JoinColumn({ name: 'user_id' })
+  @Prop({ name: 'user_id' })
   user?: UserEntity;
 }
+
+export const userSettingsSchema =
+  SchemaFactory.createForClass(UserSettingsEntity);

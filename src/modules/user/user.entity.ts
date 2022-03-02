@@ -1,14 +1,12 @@
-import { Column, Entity, OneToMany, OneToOne } from 'typeorm';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 
 import type { IAbstractEntity } from '../../common/abstract.entity';
 import { AbstractEntity } from '../../common/abstract.entity';
 import { RoleType } from '../../constants';
-import { UseDto, VirtualColumn } from '../../decorators';
-import { PostEntity } from '../post/post.entity';
+import { UseDto } from '../../decorators';
 import type { UserDtoOptions } from './dtos/user.dto';
 import { UserDto } from './dtos/user.dto';
 import type { IUserSettingsEntity } from './user-settings.entity';
-import { UserSettingsEntity } from './user-settings.entity';
 
 export interface IUserEntity extends IAbstractEntity<UserDto> {
   firstName?: string;
@@ -30,39 +28,35 @@ export interface IUserEntity extends IAbstractEntity<UserDto> {
   settings?: IUserSettingsEntity;
 }
 
-@Entity({ name: 'users' })
+@Schema({ discriminatorKey: 'users' })
 @UseDto(UserDto)
 export class UserEntity
   extends AbstractEntity<UserDto, UserDtoOptions>
   implements IUserEntity
 {
-  @Column({ nullable: true })
+  @Prop({ nullable: true })
   firstName?: string;
 
-  @Column({ nullable: true })
+  @Prop({ nullable: true })
   lastName?: string;
 
-  @Column({ type: 'enum', enum: RoleType, default: RoleType.USER })
+  @Prop()
   role: RoleType;
 
-  @Column({ unique: true, nullable: true })
+  @Prop({ unique: true, nullable: true })
   email?: string;
 
-  @Column({ nullable: true })
+  @Prop({ nullable: true })
   password?: string;
 
-  @Column({ nullable: true })
+  @Prop({ nullable: true })
   phone?: string;
 
-  @Column({ nullable: true })
+  @Prop({ nullable: true })
   avatar?: string;
 
-  @VirtualColumn()
+  @Prop()
   fullName?: string;
-
-  @OneToOne(() => UserSettingsEntity, (userSettings) => userSettings.user)
-  settings?: UserSettingsEntity;
-
-  @OneToMany(() => PostEntity, (postEntity) => postEntity.user)
-  posts: PostEntity[];
 }
+
+export const userSchema = SchemaFactory.createForClass(UserEntity);
