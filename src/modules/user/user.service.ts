@@ -1,36 +1,32 @@
-import { Injectable } from '@nestjs/common';
+import { Get, Injectable } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
+import { InjectModel } from '@nestjs/mongoose';
 import { plainToClass } from 'class-transformer';
-import type { FindConditions } from 'typeorm';
+import { Model } from 'mongoose';
 
 import type { PageDto } from '../../common/dto/page.dto';
 import { FileNotImageException, UserNotFoundException } from '../../exceptions';
 import type { IFile } from '../../interfaces';
-import { AwsS3Service } from '../../shared/services/aws-s3.service';
-import { ValidatorService } from '../../shared/services/validator.service';
 import type { Optional } from '../../types';
 import type { UserRegisterDto } from '../auth/dto/UserRegisterDto';
 import { CreateSettingsDto } from './dtos/create-settings.dto';
 import type { UserDto } from './dtos/user.dto';
 import type { UsersPageOptionsDto } from './dtos/users-page-options.dto';
-import type { UserEntity } from './user.entity';
-import { UserRepository } from './user.repository';
+import type { UserDocument } from './user.entity';
+import { UserEntity } from './user.entity';
 import type { UserSettingsEntity } from './user-settings.entity';
 
 @Injectable()
 export class UserService {
   constructor(
-    private userRepository: UserRepository,
-    private validatorService: ValidatorService,
-    private awsS3Service: AwsS3Service,
-    private commandBus: CommandBus,
+    @InjectModel(UserEntity.name) private readonly model: Model<UserDocument>,
   ) {}
 
-  /**
-   * Find single user
-   */
-  findOne(findData: FindConditions<UserEntity>): Promise<Optional<UserEntity>> {
-    return this.userRepository.findOne(findData);
+  @Get()
+  async findOne(id: string): Promise<Optional<UserEntity>> {
+    const user = await this.model.findById(id).exec();
+
+    return user;
   }
 
   async findByUsernameOrEmail(

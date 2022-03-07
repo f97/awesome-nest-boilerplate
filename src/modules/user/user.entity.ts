@@ -1,4 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import type { Document } from 'mongoose';
 
 import type { IAbstractEntity } from '../../common/abstract.entity';
 import { AbstractEntity } from '../../common/abstract.entity';
@@ -7,6 +8,8 @@ import { UseDto } from '../../decorators';
 import type { UserDtoOptions } from './dtos/user.dto';
 import { UserDto } from './dtos/user.dto';
 import type { IUserSettingsEntity } from './user-settings.entity';
+
+export type UserDocument = UserDto & Document;
 
 export interface IUserEntity extends IAbstractEntity<UserDto> {
   firstName?: string;
