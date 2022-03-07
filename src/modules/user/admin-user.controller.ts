@@ -8,15 +8,16 @@ import {
 } from '@nestjs/common';
 import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
 
+import { RoleType } from '../../constants';
 import { Auth } from '../../decorators';
 import { UserPagingDto } from './dto/UserPagingDto';
 import { UsersPageDto } from './dto/UsersPageDto';
 import { UserService } from './user.service';
 
-@Controller('users')
-@ApiTags('users')
-export class UserController {
-  constructor(private _userService: UserService) {}
+@Controller('admin/users')
+@ApiTags('admin/users')
+export class AdminUserController {
+  constructor(private userService: UserService) {}
 
   @Get('/')
   @HttpCode(HttpStatus.OK)
@@ -24,11 +25,11 @@ export class UserController {
     type: UsersPageDto,
     description: 'List of users',
   })
-  @Auth(['admin'])
+  @Auth([RoleType.ADMIN])
   getUsers(
     @Query(new ValidationPipe({ transform: true }))
     pageOptionsDto: UserPagingDto,
   ): Promise<UserPagingDto> {
-    return this._userService.getUsers(pageOptionsDto);
+    return this.userService.getUsers(pageOptionsDto);
   }
 }

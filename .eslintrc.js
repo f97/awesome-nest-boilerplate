@@ -317,6 +317,8 @@ module.exports = {
         ],
       },
     ],
+    'eslint-disable-next-line': 0,
+    'import/no-unresolved': 0,
     'no-debugger': 'error',
     'no-duplicate-case': 'error',
     'no-duplicate-imports': 'off',

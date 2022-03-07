@@ -1,3 +1,5 @@
+'use strict';
+
 export interface IFile {
   encoding: string;
   buffer: Buffer;

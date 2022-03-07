@@ -1,65 +1,28 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import type { Document } from 'mongoose';
 
-import type { IAbstractEntity } from '../../common/abstract.entity';
-import { AbstractEntity } from '../../common/abstract.entity';
-import { RoleType } from '../../constants';
-import { UseDto } from '../../decorators';
-import type { UserDtoOptions } from './dtos/user.dto';
-import { UserDto } from './dtos/user.dto';
-import type { IUserSettingsEntity } from './user-settings.entity';
+export type UserDocument = User & Document;
 
-export type UserDocument = UserDto & Document;
-
-export interface IUserEntity extends IAbstractEntity<UserDto> {
-  firstName?: string;
-
-  lastName?: string;
-
-  role: RoleType;
-
-  email?: string;
-
-  password?: string;
-
-  phone?: string;
-
-  avatar?: string;
-
-  fullName?: string;
-
-  settings?: IUserSettingsEntity;
-}
-
-@Schema({ discriminatorKey: 'users' })
-@UseDto(UserDto)
-export class UserEntity
-  extends AbstractEntity<UserDto, UserDtoOptions>
-  implements IUserEntity
-{
-  @Prop({ nullable: true })
-  firstName?: string;
-
-  @Prop({ nullable: true })
-  lastName?: string;
+@Schema()
+export class User {
+  @Prop()
+  firstName: string;
 
   @Prop()
-  role: RoleType;
-
-  @Prop({ unique: true, nullable: true })
-  email?: string;
-
-  @Prop({ nullable: true })
-  password?: string;
-
-  @Prop({ nullable: true })
-  phone?: string;
-
-  @Prop({ nullable: true })
-  avatar?: string;
+  lastName: string;
 
   @Prop()
-  fullName?: string;
+  email: string;
+
+  @Prop({ hidden: true })
+  password: string;
+
+  @Prop()
+  age: number;
+
+  @Prop()
+  phone: string;
 }
 
-export const userSchema = SchemaFactory.createForClass(UserEntity);
+// eslint-disable-next-line @typescript-eslint/naming-convention
+export const UserEntity = SchemaFactory.createForClass(User);
