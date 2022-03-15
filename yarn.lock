@@ -832,10 +832,10 @@
   resolved "https://registry.yarnpkg.com/@nanogiants/nestjs-swagger-api-exception-decorator/-/nestjs-swagger-api-exception-decorator-1.6.0.tgz#2df69be52c9eefb9449c116b096c5858d68f0723"
   integrity sha512-D0TyTGRLP2Ub5UYsXbV6ijCgTsiHHwe3DiRK/IPDY0sl+OI0ujA7NhcK6EEdA7Yh1b+S1ZHcgdzdhE+fbLmIkw==
 
-"@nestjs/axios@^0.0.6":
-  version "0.0.6"
-  resolved "https://registry.yarnpkg.com/@nestjs/axios/-/axios-0.0.6.tgz#1d641822bfe1d5fe72f6dcc77a43c3007fd916b3"
-  integrity sha512-RgtKUziiEPRtWS3KJNDqq0Epw9ffFdIKAtcj6cXnWeJvgHLwnDkw2rUsmHpDYrhszG+8bc4H8sDygRKwNPPAQA==
+"@nestjs/axios@^0.0.7":
+  version "0.0.7"
+  resolved "https://registry.yarnpkg.com/@nestjs/axios/-/axios-0.0.7.tgz#7f134636db13c2c1e8299365c7eceb73cd782b67"
+  integrity sha512-at8nj+1Nb8UleHcIN5QqZYeWX54m4m9s9gxzVE1qWy00neX2rg0+h2TfbWsnDi2tc23zIxqexanxMOJZbzO0CA==
   dependencies:
     axios "0.26.0"
 
